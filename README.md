@@ -1,30 +1,28 @@
 # Brain Tumor Segmentation via Component Tree (Max-tree)
 
-このリポジトリは、BraTS（Brain Tumor Segmentation）データセットに対して、数理形態学的手法である **Max-tree（Component Tree）** を用いて脳腫瘍領域のセグメンテーションを行うプロジェクトです。`higra` ライブラリを活用し、3Dおよび2D（Axial断面）での解析を実装しています。
+このリポジトリは、BraTS（Brain Tumor Segmentation）データセットに対して、数理形態学的手法である **Max-tree（Component Tree）** を用いて脳腫瘍領域のセグメンテーションを行うプロジェクトである。`higra` ライブラリを使用し、3Dおよび2D（Axial断面）での解析を実装している。
 
 ## ファイル構成と役割
 
 ### メイン・セグメンテーション・スクリプト
 - **`3D_maxtree_auto_shreshold_segmentation.py`**  
-  MRIボリューム全体（3D）に対してMax-treeを構築し、自動閾値判定（Valley Detection）を用いて腫瘍候補となる独立したインスタンスを抽出します。
+  MRIボリューム全体（3D）に対してMax-treeを構築し、自動閾値判定（Valley Detection）を用いて腫瘍候補となる独立したインスタンスを抽出する。
 - **`axial_maxtree_auto_threshold_segmentation.py`**  
-  スライス単位（Axial断面）で2D Max-treeを構築し、セグメンテーションを行います。各断面の結果を統合してラベルマップを生成します。
+  スライス単位（Axial断面）で2D Max-treeを構築し、セグメンテーションを行います。各断面の結果を統合してラベルマップを生成する。
 
 ### マルチモーダル・解析
-- **`_temporal.py`**  
-  FLAIR, T1ce, T2, T1の4つのモーダルを統合し、マルチモーダル特徴空間での階層的クラスタリング（Single Linkage）によるセグメンテーションを行います。
 - **`_histgram.py`**  
-  NIfTIファイルの輝度分布を可視化します。正規化処理（Min-Max正規化や外れ値カット）の前後の分布を確認するために使用します。
+  NIfTIファイルの輝度分布を可視化します。正規化処理（Min-Max正規化や外れ値カット）の前後の分布を確認するために使用する。
 
 ### ユーティリティ・可視化
 - **`_viewer.py`**  
-  `napari` を使用した3Dビューアです。元のMRI画像に生成したセグメンテーションラベル（labelmap.npy）を重ねて3次元的に確認できます。
+  `napari` を使用した3Dビューアです。元のMRI画像に生成したセグメンテーションラベル（labelmap.npy）を重ねて3次元的に確認する。
 - **`_experiment_utils.py`**  
-  実験結果を整理するためのユーティリティです。実行のたびに `output/` 内にタイムスタンプ付きのフォルダを自動生成し、ログや画像を保存します。
+  実験結果を整理するためのユーティリティ。実行のたびに `output/` 内にタイムスタンプ付きのフォルダを自動生成し、ログや画像を保存する。
 
 ### その他
 - **`.gitignore`**  
-  GitHubにアップロードしない巨大なデータセット（`.nii`）や、実行時に生成されるキャッシュ（`__pycache__`）、出力結果（`output/`）を除外するための設定ファイルです。
+  GitHubにアップロードしない巨大なデータセット（`.nii`）や、実行時に生成されるキャッシュ（`__pycache__`）、出力結果（`output/`）を除外するための設定ファイル。
 
 ## 技術スタック
 - **Language:** Python 3.x
