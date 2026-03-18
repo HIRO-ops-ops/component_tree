@@ -3,6 +3,7 @@ __pycache__/
 dataset/
 BraTS20_Training_001/
 output/
+
 *.nii
 *.mhd
 *.raw
