@@ -8,7 +8,7 @@ from _experiment_utils import create_experiment_output
 root_output = create_experiment_output()
 
 # 1. フォルダパスの設定
-folder_path = r'C:\Users\nishi\OneDrive - 近畿大学\MedICoT_Lab\BraTS\BraTS_project\BraTS20_Training_001'
+folder_path = r""
 file_list = sorted(glob.glob(os.path.join(folder_path, '*.nii*')))
 
 # 2. グラフのレイアウト設定

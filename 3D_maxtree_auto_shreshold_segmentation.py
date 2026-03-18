@@ -169,7 +169,7 @@ def extract_instances_3d(volume, voxel_threshold, intensity_threshold):
 
 if __name__ == "__main__":
     root_output = create_experiment_output()
-    path = r"BraTS20_Training_001_flair.nii"
+    path = r""
     voxel_threshold = 500
     sigma = 0.5
 
