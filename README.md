@@ -1,6 +1,6 @@
 # Brain Tumor Segmentation via Component Tree (Max-tree)
 
-このリポジトリは、BraTS（Brain Tumor Segmentation）データセットに対して、数理形態学的手法である **Max-tree（Component Tree）** を用いて脳腫瘍領域のセグメンテーションを行うプロジェクトである。`higra` ライブラリを使用し、3Dおよび2D（Axial断面）での解析を実装している。
+このリポジトリは、BraTS（Brain Tumor Segmentation）データセットに対して、 **Max-tree（Component Tree）** を用いて脳腫瘍領域のセグメンテーションを行う。`higra` ライブラリを使用し、3Dおよび2D（Axial断面）での解析を実装している。
 
 ## ファイル構成と役割
 
