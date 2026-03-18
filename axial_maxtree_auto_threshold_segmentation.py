@@ -85,19 +85,19 @@ def extract_instances_axial(volume, area_threshold, intensity_threshold):
         root = tree.root()
         n_nodes = tree.num_vertices()
 
-        # ---深さ(depth)計算 (ルートを0として子に向かって増加)--- 
+        # ---深さ(ルートを0として子に向かって増加)
         depth = np.zeros(n_nodes, dtype=np.int32)
         # Higraのノード順序（トポロジカル順）を利用して効率的に計算
         for node in reversed(range(n_nodes)):
             if node != root:
                 depth[node] = depth[parent[node]] + 1
 
-        # ---persistence（ベクトル化）---
+        #（ベクトル化）
         persistence = np.zeros(n_nodes, dtype=np.float32)
         mask = np.arange(n_nodes) != root
         persistence[mask] = altitudes[parent[mask]] - altitudes[mask]
 
-        #--- node_table / tree_edges 保存 ---
+        #node_table / tree_edges
         for node in range(n_nodes):
             node_table.append([
                 z, node, parent[node],
@@ -108,7 +108,7 @@ def extract_instances_axial(volume, area_threshold, intensity_threshold):
                 mean_intensity[node]
             ])
             tree_edges.append([z, parent[node], node])
-        #--- 閾値判定ノード抽出 ---
+        # 閾値判定ノード抽出
         
         candidates = np.where(
             (area > area_threshold) &
@@ -118,16 +118,16 @@ def extract_instances_axial(volume, area_threshold, intensity_threshold):
 
         candidate_set = set(candidates)
         
-        #--- 子リスト構築 ---
+        #子リスト構築 
         children = [[] for _ in range(n_nodes)]
         for i in range(n_nodes):
             if i != root:
                 children[parent[i]].append(i)
 
-        #--- 親が候補に含まれないノードのみ採用（＝最上位ノード） ---
+        #親が候補に含まれないノードのみ採用（＝最上位ノード） 
         selected_nodes = [n for n in candidates if parent[n] not in candidate_set]
 
-        #--- 各ノードを根とする部分木全体を再構成 ---
+        #各ノードを根とする部分木全体を再構成
         for node in selected_nodes:
             stack = [node]
             subtree = []
@@ -189,7 +189,7 @@ if __name__ == "__main__":
 
     root_output = create_experiment_output()
     
-    # --- パラメータ設定 ---
+    #パラメータ設定
     path = r"BraTS20_Training_001_flair.nii"
     area_threshold = 50
     sigma = 0.5

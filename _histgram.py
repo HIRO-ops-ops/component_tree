@@ -34,7 +34,7 @@ for i, file_path in enumerate(file_list):
         plot_data = foreground_data
         title_label = "Original (Label)"
     else:
-        # --- 実践的な正規化プロセス ---
+
         # 1. 外れ値の除去 (上位0.5%の値をカットして分布を安定させる)
         upper_limit = np.percentile(foreground_data, 99.5)
         clipped_data = np.clip(foreground_data, a_min=None, a_max=upper_limit)

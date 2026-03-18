@@ -50,9 +50,7 @@ def save_histogram_with_threshold(bin_centers, counts, smoothed, threshold, outp
     plt.savefig(output_path)
     plt.close()
 
-# ==================================
-# 可視化・保存用関数 (2D版と統一)
-# ==================================
+
 def save_overlay_images_3d(instances, volume, output_dir):
     """3Dインスタンスの最大断断面をオーバーレイ保存"""
     os.makedirs(output_dir, exist_ok=True)
@@ -78,9 +76,7 @@ def save_numpy_instances_3d(instances, output_dir):
         save_path = os.path.join(output_dir, f"instance_{i:03d}_node_{inst['node_id']}.npy")
         np.save(save_path, inst["mask"])
 
-# ==================================
-# 3Dインスタンス抽出 & ラベルマップ
-# ==================================
+
 def extract_instances_3d(volume, voxel_threshold, intensity_threshold):
     print("   - 3D Max-tree構築中...")
     graph = hg.get_6_adjacency_graph(volume.shape)
@@ -91,7 +87,7 @@ def extract_instances_3d(volume, voxel_threshold, intensity_threshold):
     parent = tree.parents()
     root = tree.root()
 
-    # --- 属性計算 (2D版と同じ項目) ---
+    # 属性計算 (2D版と同じ項目) 
     print("   - 属性(Depth, Mean, Persistence)計算中...")
     # Depth
     depth = np.zeros(n_nodes, dtype=np.int32)
@@ -109,7 +105,7 @@ def extract_instances_3d(volume, voxel_threshold, intensity_threshold):
     else:
         mean_intensity = hg.attribute_mean_vertex_weights(tree, volume)
 
-    # --- 候補選択 ---
+    #候補選択 
     candidates_mask = (area > voxel_threshold) & (altitudes > intensity_threshold)
     candidates_mask[root] = False
     candidate_set = set(np.where(candidates_mask)[0])
@@ -118,7 +114,7 @@ def extract_instances_3d(volume, voxel_threshold, intensity_threshold):
     selected_nodes = [n for n in candidate_set if parent[n] not in candidate_set]
     print(f"   - 抽出された独立インスタンス数: {len(selected_nodes)}")
 
-    # --- ラベルマップ & インスタンス詳細作成 ---
+    #ラベルマップ & インスタンス詳細作成
     labelmap = np.zeros(volume.shape, dtype=np.int32)
     instances = []
     
@@ -137,7 +133,7 @@ def extract_instances_3d(volume, voxel_threshold, intensity_threshold):
             subtree.append(curr)
             stack.extend(children[curr])
         
-        # 領域再構成
+
         node_indicator = np.zeros(n_nodes, dtype=np.uint8)
         node_indicator[subtree] = 1
         deleted_nodes = np.ones(n_nodes, dtype=bool)
@@ -155,8 +151,8 @@ def extract_instances_3d(volume, voxel_threshold, intensity_threshold):
             "mean_intensity": float(mean_intensity[node])
         })
 
-    # --- node_table / tree_edges 作成 (2D版の構造に準拠) ---
-    # [Slice(3Dは常に0とする), node, parent, depth, altitude, persistence, area, mean]
+
+
     node_table = []
     tree_edges = []
     for n in range(n_nodes):
@@ -169,9 +165,8 @@ def extract_instances_3d(volume, voxel_threshold, intensity_threshold):
 
     return instances, labelmap, np.array(node_table), np.array(tree_edges)
 
-# ==================================
-# メイン処理
-# ==================================
+
+
 if __name__ == "__main__":
     root_output = create_experiment_output()
     path = r"BraTS20_Training_001_flair.nii"
@@ -206,7 +201,7 @@ if __name__ == "__main__":
         save_overlay_images_3d(instances, volume_raw, overlays_dir)
         save_numpy_instances_3d(instances, numpy_dir)
         
-        # ラベルマップ保存
+
         np.save(os.path.join(root_output, "labelmap.npy"), labelmap)
         
         print("▶ 8. ノード階層情報保存")
