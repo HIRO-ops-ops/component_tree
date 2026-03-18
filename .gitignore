@@ -1,11 +1,9 @@
-# 巨大なデータフォルダを除外
+__pycache__/
+.vscode/
 dataset/
 BraTS20_Training_001/
-output/
 archive/
-__pycache__/
-
-# 大きなファイルを除外
+output/
 *.nii
 *.mhd
 *.raw
