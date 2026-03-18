@@ -190,7 +190,7 @@ if __name__ == "__main__":
     root_output = create_experiment_output()
     
     #パラメータ設定
-    path = r"BraTS20_Training_001_flair.nii"
+    path = r""
     area_threshold = 50
     sigma = 0.5
     
