@@ -2,7 +2,6 @@ __pycache__/
 .vscode/
 dataset/
 BraTS20_Training_001/
-archive/
 output/
 *.nii
 *.mhd
