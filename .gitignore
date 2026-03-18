@@ -1,0 +1,11 @@
+# 巨大なデータフォルダを除外
+dataset/
+BraTS20_Training_001/
+output/
+archive/
+__pycache__/
+
+# 大きなファイルを除外
+*.nii
+*.mhd
+*.raw
